@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .code-block {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+    </style>
+    <title>Java MySQL closeConnection Method</title>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="my-4">Java MySQL closeConnection Method</h1>
+
+    <div class="code-block">
+        <pre><code>public static void closeConnection(Connection connection) {
+    try {
+        connection.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Method: <code>closeConnection</code></h5>
+            <p class="card-text">
+                This method closes an existing database connection.
+            </p>
+            <ul>
+                <li><strong>Parameters:</strong> A <code>Connection</code> object that represents the open connection to be closed.</li>
+                <li><strong>Error Handling:</strong> Catches <code>SQLException</code> and prints the stack trace if an error occurs during the closing of the connection.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
