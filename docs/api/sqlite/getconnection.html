@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .code-block {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+    </style>
+    <title>Java SQLite getConnection Method</title>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="my-4">Java SQLite getConnection Method</h1>
+
+    <div class="code-block">
+        <pre><code>public static Connection getConnection(String dbFilePath) {
+    try {
+        return DriverManager.getConnection("jdbc:sqlite:" + dbFilePath);
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null;
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Method: <code>getConnection</code></h5>
+            <p class="card-text">
+                This method establishes a connection to an SQLite database.
+            </p>
+            <ul>
+                <li><strong>Parameters:</strong> <code>String dbFilePath</code>: The file path to the SQLite database file.</li>
+                <li><strong>Returns:</strong> A <code>Connection</code> object if the connection is successful, otherwise <code>null</code>.</li>
+                <li><strong>Error Handling:</strong> Catches <code>SQLException</code> and prints the stack trace if an error occurs during connection.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
