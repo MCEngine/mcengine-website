@@ -22,7 +22,7 @@
     <h1 class="my-4">Java MySQL getConnection Method</h1>
 
     <div class="code-block">
-        <pre><code>public static Connection getConnection(String host, String database, String username, String password, int port) {
+        <pre><code>public static Connection getConnection(String host, String database, String username, String password, String port) {
     try {
         return DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
     } catch (SQLException e) {
@@ -45,7 +45,7 @@
                     <li><code>String database</code>: The name of the database.</li>
                     <li><code>String username</code>: The username to connect to the database.</li>
                     <li><code>String password</code>: The password associated with the username.</li>
-                    <li><code>int port</code>: The port number on which the database server is listening (default for MySQL is 3306).</li>
+                    <li><code>String port</code>: The port number on which the database server is listening (default for MySQL is 3306).</li>
                 </ul>
                 <li><strong>Returns:</strong> A <code>Connection</code> object if the connection is successful, otherwise <code>null</code>.</li>
                 <li><strong>Error Handling:</strong> Catches <code>SQLException</code> and prints the stack trace if an error occurs during connection.</li>
