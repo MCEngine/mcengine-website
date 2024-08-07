@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .code-block {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+    </style>
+    <title>Java getClass Method</title>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="my-4">Java getClass Method</h1>
+
+    <div class="code-block">
+        <pre><code>public static Class<?> getClass(String className) throws ClassNotFoundException {
+    // Return the Class object associated with the class name
+    return Class.forName(className);
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Method: <code>getClass</code></h5>
+            <p class="card-text">
+                This method returns the <code>Class</code> object associated with the specified class name.
+            </p>
+            <ul>
+                <li><strong>Parameters:</strong> A <code>String</code> representing the fully qualified name of the desired class.</li>
+                <li><strong>Returns:</strong> A <code>Class&lt;?&gt;</code> object representing the class with the specified name.</li>
+                <li><strong>Throws:</strong> <code>ClassNotFoundException</code> if the class cannot be located.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
