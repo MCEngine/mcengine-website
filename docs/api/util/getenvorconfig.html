@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .code-block {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+    </style>
+    <title>Java getEnvOrConfig Method</title>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="my-4">Java getEnvOrConfig Method</h1>
+
+    <div class="code-block">
+        <pre><code>public static String getEnvOrConfig(JavaPlugin instance, String envVarName, String configKey) {
+    try {
+        String value = System.getenv(envVarName);
+        return Optional.ofNullable(value).orElseGet(() -> {
+            // Assuming instance.getConfig() returns a Config object with a getString method
+            return instance.getConfig().getString(configKey);
+        });
+    } catch (Exception e) {
+        // Handle exceptions gracefully, e.g., log the error and return a default value
+        System.err.println("Error retrieving value: " + e.getMessage());
+        return null; // Or return a default value based on your requirements
+    }
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Method: <code>getEnvOrConfig</code></h5>
+            <p class="card-text">
+                This method retrieves a value from an environment variable or, if the environment variable is not set, from a configuration object.
+            </p>
+            <ul>
+                <li><strong>Parameters:</strong></li>
+                <ul>
+                    <li><code>JavaPlugin instance</code>: An instance of <code>JavaPlugin</code> which provides access to the configuration.</li>
+                    <li><code>String envVarName</code>: The name of the environment variable.</li>
+                    <li><code>String configKey</code>: The key used to retrieve the value from the configuration if the environment variable is not set.</li>
+                </ul>
+                <li><strong>Returns:</strong> The value of the environment variable if set, otherwise the value from the configuration. If an exception occurs, it returns <code>null</code> or a default value as needed.</li>
+                <li><strong>Error Handling:</strong> Catches any exceptions, logs the error, and returns <code>null</code> or a default value based on requirements.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
