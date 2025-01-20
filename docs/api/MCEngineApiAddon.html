@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .code-block {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+    </style>
+    <title>MCEngineApiAddon Documentation</title>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="my-4">MCEngineApiAddon Documentation</h1>
+
+    <div class="code-block">
+        <pre><code>package io.github.mcengine.api;
+
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.List;
+import java.util.logging.Level;
+
+public class MCEngineApiAddon&lt;T&gt; {
+
+    private final JavaPlugin plugin;
+    private final Class&lt;T&gt; addonInterface;
+    private final List&lt;T&gt; loadedAddons;
+
+    public MCEngineApiAddon(JavaPlugin plugin, Class&lt;T&gt; addonInterface, List&lt;T&gt; loadedAddons) {
+        this.plugin = plugin;
+        this.addonInterface = addonInterface;
+        this.loadedAddons = loadedAddons;
+    }
+
+    public void loadAddons() {
+        File addonDir = new File(plugin.getDataFolder(), "addons");
+        if (!addonDir.exists() &amp;&amp; !addonDir.mkdirs()) {
+            plugin.getLogger().info("Addon folder could not be created: " + addonDir.getPath());
+            return;
+        }
+
+        File[] files = addonDir.listFiles((dir, name) -&gt; name.endsWith(".jar"));
+        if (files == null || files.length == 0) {
+            plugin.getLogger().info("No addons found in folder: " + addonDir.getPath());
+            return;
+        }
+
+        for (File file : files) {
+            try {
+                URLClassLoader classLoader = new URLClassLoader(new URL[]{file.toURI().toURL()}, plugin.getClass().getClassLoader());
+                Class&lt;?&gt; addonClass = Class.forName(getAddonMainClassName(file), true, classLoader);
+                if (addonInterface.isAssignableFrom(addonClass)) {
+                    T addon = addonInterface.cast(addonClass.getDeclaredConstructor().newInstance());
+                    loadedAddons.add(addon);
+                    plugin.getLogger().info("Loaded addon: " + addonClass.getName());
+                } else {
+                    plugin.getLogger().warning("Addon " + file.getName() + " does not implement the required interface.");
+                }
+            } catch (Exception e) {
+                plugin.getLogger().log(Level.SEVERE, "Failed to load addon: " + file.getName(), e);
+            }
+        }
+    }
+
+    protected String getAddonMainClassName(File file) {
+        return "io.github.mcengine.addon.AddonImpl";
+    }
+}</code></pre>
+    </div>
+
+    <h2>Usage</h2>
+    <div class="code-block">
+        <pre><code>package io.github.mcengine.example;
+
+import io.github.mcengine.api.MCEngineApiAddon;
+import io.github.mcengine.addon.AddonInterface;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ExamplePlugin extends JavaPlugin {
+
+    private MCEngineApiAddon&lt;AddonInterface&gt; addonLoader;
+    private final List&lt;AddonInterface&gt; loadedAddons = new ArrayList&lt;&gt;();
+
+    @Override
+    public void onEnable() {
+        addonLoader = new MCEngineApiAddon&lt;&gt;(this, AddonInterface.class, loadedAddons);
+        addonLoader.loadAddons();
+
+        for (AddonInterface addon : loadedAddons) {
+            addon.onActivate(this);
+        }
+
+        getLogger().info("ExamplePlugin enabled with " + loadedAddons.size() + " addons loaded.");
+    }
+
+    @Override
+    public void onDisable() {
+        for (AddonInterface addon : loadedAddons) {
+            addon.onDeactivate(this);
+        }
+
+        getLogger().info("ExamplePlugin disabled.");
+    }
+}</code></pre>
+    </div>
+
+    <h2>Addon Interface</h2>
+    <div class="code-block">
+        <pre><code>package io.github.mcengine.addon;
+
+import org.bukkit.plugin.Plugin;
+
+public interface AddonInterface {
+    void onActivate(Plugin plugin);
+    void onDeactivate(Plugin plugin);
+}</code></pre>
+    </div>
+
+    <h2>Example Addon</h2>
+    <div class="code-block">
+        <pre><code>package io.github.mcengine.addon;
+
+import org.bukkit.plugin.Plugin;
+
+public class ExampleAddon implements AddonInterface {
+
+    @Override
+    public void onActivate(Plugin plugin) {
+        plugin.getLogger().info("ExampleAddon activated!");
+    }
+
+    @Override
+    public void onDeactivate(Plugin plugin) {
+        plugin.getLogger().info("ExampleAddon deactivated!");
+    }
+}</code></pre>
+    </div>
+
+    <h2>Key Points</h2>
+    <ul>
+        <li>The <code>MCEngineApiAddon</code> dynamically loads addons from the <code>addons</code> folder.</li>
+        <li>Addons must implement the <code>AddonInterface</code> to be loaded and activated.</li>
+        <li>The <code>ExamplePlugin</code> logs addon activation and deactivation during its lifecycle.</li>
+    </ul>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
