@@ -3,41 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Class Reflection Example</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .code-block {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            margin-bottom: 20px;
-        }
-    </style>
-    <title>Java getClass Method</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../styles/box.css">
 </head>
 <body>
 
 <div class="container">
-    <h1 class="my-4">Java getClass Method</h1>
+    <h1 class="my-4">Java Reflection: Getting Class Object</h1>
 
-    <div class="code-block">
-        <pre><code>public static Class<?> getClass(String className) throws ClassNotFoundException {
+    <h3>Code</h3>
+    <div class="code-block"><pre><code>public static Class getClass(String className) throws ClassNotFoundException {
     // Return the Class object associated with the class name
     return Class.forName(className);
 }</code></pre>
     </div>
 
+    <h3>Usage</h3>
+    <div class="code-block"><pre><code>import io.github.mcengine.api.MCEngineApiUtil;
+
+public class Main {
+    public static void main(String[] args) {
+        try {
+            // Example: Get the Class object for "java.util.ArrayList"
+            Class&lt;?&gt; clazz = MCEngineApiUtil.getClass("java.util.ArrayList");
+
+            // Print class name to verify
+            System.out.println("Class found: " + clazz.getName());
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class not found: " + e.getMessage());
+        }
+    }
+}</code></pre>
+    </div>
+
+    <h3>Method Explanation</h3>
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Method: <code>getClass</code></h5>
             <p class="card-text">
-                This method returns the <code>Class</code> object associated with the specified class name.
+                This method retrieves the <code>Class</code> object associated with a given class name. 
+                It allows dynamic class loading using reflection.
             </p>
             <ul>
-                <li><strong>Parameters:</strong> A <code>String</code> representing the fully qualified name of the desired class.</li>
-                <li><strong>Returns:</strong> A <code>Class&lt;?&gt;</code> object representing the class with the specified name.</li>
-                <li><strong>Throws:</strong> <code>ClassNotFoundException</code> if the class cannot be located.</li>
+                <li><strong>Parameters:</strong> <code>String className</code> - Fully qualified name of the class.</li>
+                <li><strong>Returns:</strong> <code>Class</code> - The Class object representing the specified class.</li>
+                <li><strong>Throws:</strong> <code>ClassNotFoundException</code> - If the specified class is not found.</li>
             </ul>
         </div>
     </div>

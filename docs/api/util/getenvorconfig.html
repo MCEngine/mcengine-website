@@ -3,36 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Method: getEnvOrConfig</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .code-block {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            margin-bottom: 20px;
-        }
-    </style>
-    <title>Java getEnvOrConfig Method</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../styles/box.css">
 </head>
 <body>
 
 <div class="container">
-    <h1 class="my-4">Java getEnvOrConfig Method</h1>
+    <h1 class="my-4">Java Method: <code>getEnvOrConfig</code></h1>
 
-    <div class="code-block">
-        <pre><code>public static String getEnvOrConfig(JavaPlugin instance, String envVarName, String configKey) {
+    <h3>Code</h3>
+    <div class="code-block"><pre><code>public static String getEnvOrConfig(JavaPlugin instance, String envVarName, String configKey) {
     try {
         String value = System.getenv(envVarName);
         return Optional.ofNullable(value).orElseGet(() -> {
-            // Assuming instance.getConfig() returns a Config object with a getString method
             return instance.getConfig().getString(configKey);
         });
     } catch (Exception e) {
-        // Handle exceptions gracefully, e.g., log the error and return a default value
         System.err.println("Error retrieving value: " + e.getMessage());
-        return null; // Or return a default value based on your requirements
+        return null;
+    }
+}</code></pre>
+    </div>
+
+    <h3>Usage</h3>
+    <div class="code-block"><pre><code>import io.github.mcengine.api.MCEngineApiUtil;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class MyPlugin extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+        String databaseUrl = MCEngineApiUtil.getEnvOrConfig(this, "DB_URL", "database.url");
+
+        if (databaseUrl != null) {
+            getLogger().info("Using database URL: " + databaseUrl);
+        } else {
+            getLogger().warning("Database URL not found in environment variables or config.yml!");
+        }
     }
 }</code></pre>
     </div>
@@ -41,17 +51,18 @@
         <div class="card-body">
             <h5 class="card-title">Method: <code>getEnvOrConfig</code></h5>
             <p class="card-text">
-                This method retrieves a value from an environment variable or, if the environment variable is not set, from a configuration object.
+                This method retrieves a configuration value from either an environment variable or a configuration file.
             </p>
             <ul>
-                <li><strong>Parameters:</strong></li>
-                <ul>
-                    <li><code>JavaPlugin instance</code>: An instance of <code>JavaPlugin</code> which provides access to the configuration.</li>
-                    <li><code>String envVarName</code>: The name of the environment variable.</li>
-                    <li><code>String configKey</code>: The key used to retrieve the value from the configuration if the environment variable is not set.</li>
-                </ul>
-                <li><strong>Returns:</strong> The value of the environment variable if set, otherwise the value from the configuration. If an exception occurs, it returns <code>null</code> or a default value as needed.</li>
-                <li><strong>Error Handling:</strong> Catches any exceptions, logs the error, and returns <code>null</code> or a default value based on requirements.</li>
+                <li><strong>Parameters:</strong>
+                    <ul>
+                        <li><code>JavaPlugin instance</code> - The current JavaPlugin instance.</li>
+                        <li><code>String envVarName</code> - The name of the environment variable.</li>
+                        <li><code>String configKey</code> - The key for the config value.</li>
+                    </ul>
+                </li>
+                <li><strong>Returns:</strong> The retrieved value, either from the environment or the config file.</li>
+                <li><strong>Error Handling:</strong> If an exception occurs, an error message is printed, and <code>null</code> is returned.</li>
             </ul>
         </div>
     </div>
