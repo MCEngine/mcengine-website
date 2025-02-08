@@ -3,12 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Icon -->
-    <script src="https://jetsadawijit.github.io/bootstrap/script/favicon.js"></script>
-    <!-- Redirect -->
-    <meta http-equiv="Refresh" content="0; url='https://github.com/MCEngine/mcengine'" />
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Title -->
     <title>MCEngine</title>
 </head>
 <body>
+    <div class="center-box">
+        <div class="container container-box">
+            <h1>Util</h1>
+            <a href="api/util/getclass.html" class="btn btn-primary">getClass</a>
+            <a href="api/util/getenvorconfig.html" class="btn btn-primary">getEnvOrConfig</a>
+            <a href="api/MCEngineApiAddon.html" class="btn btn-primary">MCEngineApiAddon</a>
+        </div>
+    </div>
+
+    <div class="footer"></div> <!-- Footer will be inserted here -->
+
+    <script>
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => document.querySelector('.footer').innerHTML = data)
+            .catch(error => console.error('Error loading footer:', error));
+    </script>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
