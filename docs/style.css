@@ -27,3 +27,18 @@ body {
 .container-box a {
     margin: 5px;
 }
+
+footer {
+    background-color: #212529;
+    color: #ffffff;
+}
+
+footer a {
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+footer a:hover {
+    color: #17a2b8;
+    text-decoration: underline;
+}
